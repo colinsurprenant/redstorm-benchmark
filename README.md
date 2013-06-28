@@ -8,23 +8,25 @@ depends on the RedStorm 0.6.6 branch using JRuby 1.7.4 and Storm 0.9.0-wip16. To
 - edit your ~/.storm/storm.yaml to point to your cluster nimbus host
 - clone project
 
+### setup
+
 ```sh
 $ bundle install
 $ bundle exec rake setup
 ```
 
-the `rake setup` will:
+`rake setup` will:
 - install RedStorm
 - compile the benchmarking Java classes
 - create the topology jar
 
-- run the Java topology
+
+### run the Java topology
 
 ```sh
 $ bundle exec redstorm cluster lib/redstorm-benchmark/base_java_topology.rb
 ```
-
-- run the Ruby topology
+### run the Ruby topology
 
 ```sh
 $ bundle exec redstorm cluster lib/redstorm-benchmark/base_ruby_topology.rb
