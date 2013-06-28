@@ -20,6 +20,9 @@ $ bundle exec rake setup
 - compile the benchmarking Java classes
 - create the topology jar
 
+## base topology benchmark
+
+both the Java and Ruby base topologies use the same Java emitting spout which spits tuples as fast as possible. both topologies are build using two very basic bolts without any actual computation to measure the base bolt input/output throughput which gives an idea of the basic JRuby + DSL overhead.
 
 ### run the Java topology
 
