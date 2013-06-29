@@ -31,7 +31,9 @@ $ bundle exec rake setup
 
 ## base topology benchmark
 
-Both the Java and Ruby base topologies use the same Java emitting spout which spits tuples as fast as possible. Both topologies are built using two bolts without any actual computation. This help measure the JRuby bolt input/output overhead compared to Java.
+The goal with the base topology benchmark is to get an idea of the JRuby + DSL overhead of calling a bolt without any computation, just receiving and emitting tuples.
+
+Both the Java and Ruby base topologies use the same Java emitting spout which spits tuples as fast as possible. Both topologies are built using two bolts without any computation.
 
 ### run the Java topology
 
@@ -44,3 +46,43 @@ $ bundle exec redstorm cluster lib/redstorm-benchmark/base_java_topology.rb
 $ bundle exec redstorm cluster lib/redstorm-benchmark/base_ruby_topology.rb
 ```
 
+## results
+
+The stats are taken from the last 10 minutes execution window at around the 15th minute of execution.
+
+### environment
+
+- Single node cluster
+- Amazon EC2 m1.large instance (64bits, 4 ECU, 7.6GB)
+- Linux 12.10
+- RedStorm 0.6.6.beta1 (v0.6.6 branch)
+- Storm 0.9.0-wip16
+- JRuby 1.7.4
+- OpenJDK 1.7.0_21
+
+### topology
+
+- 4 workers
+- gen_spout: 2 executors, 2 tasks
+- identity_bolt: 8 executors, 8 tasks
+- ack_bolt: 2 executors, 2 tasks
+
+### Java
+
+- **54057** tuples/sec emitted
+- ack_bolt
+  - capacity: 0.093
+  - execute latency: 0.007ms
+- identity_bolt
+  - capacity: 0.092
+  - execute latency: 0.018ms
+
+### JRuby
+
+- **23579** tuples/sec emitted
+- ack_bolt
+  - capacity: 0.310
+  - execute latency: 0.057ms
+- identity_bolt
+  - capacity: 0.967
+  - execute latency: 0.494ms
