@@ -86,3 +86,13 @@ The stats are taken from the last 10 minutes execution window at around the 15th
 - identity_bolt
   - capacity: 0.967
   - execute latency: 0.494ms
+
+**25% improvement** with the modifications on the DSL closures execution (in the dsl_closure_exec branch)
+
+- **29547** tuples/sec emitted
+- ack_bolt
+  - capacity: 0.624
+  - execute latency: 0.082ms
+- identity_bolt
+  - capacity: 0.858
+  - execute latency: 0.445ms
