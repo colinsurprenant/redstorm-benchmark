@@ -18,7 +18,7 @@ end
 class BaseRubyTopology < RedStorm::DSL::Topology
   spout GenSpout, [10], :parallelism => 2
 
-  bolt IdentityBolt, :parallelism => 2 do
+  bolt IdentityBolt, :parallelism => 8 do
     output_fields :id, :items
     source GenSpout, :shuffle
   end
@@ -31,7 +31,7 @@ class BaseRubyTopology < RedStorm::DSL::Topology
     debug false
 
     num_ackers 0
-    num_workers 2
+    num_workers 4
     max_spout_pending 10000
   end
 end

@@ -8,7 +8,7 @@ java_import 'storm.benchmark.IdentityBolt'
 class BaseJavaTopology < RedStorm::DSL::Topology
   spout GenSpout, [10], :parallelism => 2
 
-  bolt IdentityBolt, :parallelism => 2 do
+  bolt IdentityBolt, :parallelism => 8 do
     source GenSpout, :shuffle
   end
 
@@ -17,10 +17,10 @@ class BaseJavaTopology < RedStorm::DSL::Topology
   end
 
   configure do |env|
-    debug true
+    debug false
 
     num_ackers 0
-    num_workers 2
+    num_workers 4
     max_spout_pending 10000
   end
 end
