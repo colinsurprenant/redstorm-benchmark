@@ -2,7 +2,7 @@
 
 Java/JRuby comparative benchmarks of Storm topologies. The idea is to have equivalent topologies in both environments to measure how the JRuby topologies compare to the Java ones.
 
-## dependencies
+## Dependencies
 
 - [RedStorm](https://github.com/colinsurprenant/redstorm) >= 0.6.6.beta1 (currently the 0.6.6 branch)
 - JRuby 1.7.4
@@ -17,7 +17,7 @@ To use another **JRuby version**, supply a [custom topology dependency](https://
 - edit your `~/.storm/storm.yaml` to point to your cluster nimbus host
 - clone project
 
-## setup
+## Setup
 
 ```sh
 $ bundle install
@@ -29,28 +29,28 @@ $ bundle exec rake setup
 - compile the benchmarking Java classes
 - create the topology jar
 
-## base topology benchmark
+## Base topology benchmark
 
 The goal with the base topology benchmark is to get an idea of the JRuby + DSL overhead of calling a bolt without any computation, just receiving and emitting tuples.
 
 Both the Java and Ruby base topologies use the same Java emitting spout which spits tuples as fast as possible. Both topologies are built using two bolts without any computation.
 
-### run the Java topology
+### Run the Java topology
 
 ```sh
 $ bundle exec redstorm cluster lib/redstorm-benchmark/base_java_topology.rb
 ```
-### run the Ruby topology
+### Run the Ruby topology
 
 ```sh
 $ bundle exec redstorm cluster lib/redstorm-benchmark/base_ruby_topology.rb
 ```
 
-## results
+## Results
 
 The stats are taken from the last 10 minutes execution window at around the 15th minute of execution.
 
-### environment
+### Environment
 
 - Single node cluster
 - Amazon EC2 m1.large instance (64bits, 4 ECU, 7.6GB)
@@ -60,7 +60,7 @@ The stats are taken from the last 10 minutes execution window at around the 15th
 - JRuby 1.7.4
 - OpenJDK 1.7.0_21
 
-### topology
+### Topology
 
 - 4 workers
 - gen_spout: 2 executors, 2 tasks
