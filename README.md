@@ -1,14 +1,23 @@
 # redstorm-benchmark
 
-depends on the RedStorm 0.6.6 branch using JRuby 1.7.4 and Storm 0.9.0-wip16. To use another Storm version, simply supply a custom Storm dependency see the RedStorm README for this. Make sure both the Storm dependency version and the cluster version are the same.
+Java/JRuby comparative benchmarks of Storm topologies. The idea is to have equivalent topologies in both environments to measure how the JRuby topologies compare to the Java ones.
 
-- make sure you are running JRuby 1.7.4
-- have Storm 0.9.0-wip16 extracted locally and its bin directory in your path
-- have a Storm 0.9.0-wip16 cluster handy
-- edit your ~/.storm/storm.yaml to point to your cluster nimbus host
+## dependencies
+
+- [RedStorm](https://github.com/colinsurprenant/redstorm) >= 0.6.6.beta1 (currently the 0.6.6 branch)
+- JRuby 1.7.4
+- [Storm](https://github.com/nathanmarz/storm/) 0.9.0-wip16.
+
+To use another **Storm version**, supply a [custom Storm dependency](https://github.com/colinsurprenant/redstorm#custom-jar-dependencies-in-your-topology-xml-warning-p). Make sure the Storm version matches the version on the cluster.
+
+To use another **JRuby version**, supply a [custom topology dependency](https://github.com/colinsurprenant/redstorm#custom-jar-dependencies-in-your-topology-xml-warning-p). Make sure your installed JRuby version matches the RedStorm JRuby dependency version
+
+- have Storm extracted locally and its `bin/` directory in your path
+- have a Storm cluster handy
+- edit your `~/.storm/storm.yaml` to point to your cluster nimbus host
 - clone project
 
-### setup
+## setup
 
 ```sh
 $ bundle install
@@ -22,7 +31,7 @@ $ bundle exec rake setup
 
 ## base topology benchmark
 
-both the Java and Ruby base topologies use the same Java emitting spout which spits tuples as fast as possible. both topologies are build using two very basic bolts without any actual computation to measure the base bolt input/output throughput which gives an idea of the basic JRuby + DSL overhead.
+Both the Java and Ruby base topologies use the same Java emitting spout which spits tuples as fast as possible. Both topologies are built using two bolts without any actual computation. This help measure the JRuby bolt input/output overhead compared to Java.
 
 ### run the Java topology
 
