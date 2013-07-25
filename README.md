@@ -4,7 +4,7 @@ Java/JRuby comparative benchmarks of Storm topologies. The idea is to have equiv
 
 ## Dependencies
 
-- [RedStorm](https://github.com/colinsurprenant/redstorm) >= 0.6.6.beta1 (currently the 0.6.6 branch)
+- [RedStorm](https://github.com/colinsurprenant/redstorm) >= 0.6.6
 - JRuby 1.7.4
 - [Storm](https://github.com/nathanmarz/storm/) 0.9.0-wip16.
 
@@ -55,7 +55,7 @@ The stats are taken from the last 10 minutes execution window at around the 15th
 - Single node cluster
 - Amazon EC2 m1.large instance (64bits, 4 ECU, 7.6GB)
 - Linux 12.10
-- RedStorm 0.6.6.beta1 (v0.6.6 branch)
+- RedStorm 0.6.6
 - Storm 0.9.0-wip16
 - JRuby 1.7.4
 - OpenJDK 1.7.0_21
@@ -78,16 +78,6 @@ The stats are taken from the last 10 minutes execution window at around the 15th
   - execute latency: 0.018ms
 
 ### JRuby
-
-- **23579** tuples/sec emitted
-- ack_bolt
-  - capacity: 0.310
-  - execute latency: 0.057ms
-- identity_bolt
-  - capacity: 0.967
-  - execute latency: 0.494ms
-
-**25% improvement** with the modifications on the DSL closures execution (in the dsl_closure_exec branch)
 
 - **29547** tuples/sec emitted
 - ack_bolt
