@@ -1,4 +1,5 @@
 source "https://rubygems.org"
 
-gem "redstorm", "~> 0.6.6"
+# gem "redstorm", :path => "../redstorm"
+gem "redstorm"
 gem 'rake'
