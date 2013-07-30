@@ -30,9 +30,9 @@ This will:
 
 ## Base topology benchmark
 
-The goal with the base topology benchmark is to get an idea of the JRuby overhead of calling a bolt without any computation, just receiving and emitting tuples.
+The goal with the base topology benchmark is to get an idea of the JRuby overhead of calling bolts without any computation, just receiving and emitting tuples. Obviously this does not indicate the kind of performance to expect from a *real* JRuby topology but gives an indication of the base overhead of using the RedStorm/JRuby layer on Storm. The overall performance of a *real* topology will be affected by many other factors.
 
-Both the Java and Ruby base topologies use the same Java emitting spout which spits tuples as fast as possible. Both topologies are built using two bolts without any computation.
+To make sure both topologies are stressed the same way, both the Java and Ruby topologies use the **same Java emitting spout** which spits tuples as fast as possible. Both topologies are built using two bolts without any computation.
 
 ```sh
 $ bundle exec redstorm cluster lib/redstorm-benchmark/base_java_topology.rb
@@ -52,6 +52,8 @@ $ bundle exec redstorm cluster lib/redstorm-benchmark/base_ruby_topology.rb
 - OpenJDK 1.7.0_21
 
 ### Topology
+
+On a single node, using a single worker and 8 identity bolts has given the best results (parallelism between 1 to 12 has been tested). No particular JVM/GC tweeking has been made other than providing enough headroom to the worker process with `-Xmx4096m -Xms4096m` and more code cache `-XX:ReservedCodeCacheSize=128m`.
 
  | executors | tasks
 --- | ---: | ---:
