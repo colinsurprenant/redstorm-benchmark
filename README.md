@@ -1,6 +1,6 @@
 # redstorm-benchmark
 
-Java/JRuby comparative benchmarks of Storm topologies. The idea is to have equivalent topologies in both environments to measure how the JRuby topologies compare to the Java ones.
+Comparative benchmarks of equivalent Java and JRuby Storm topologies.
 
 ## Dependencies
 
@@ -12,7 +12,6 @@ To use another **Storm version**, supply a [custom Storm dependency](https://git
 
 To use another **JRuby version**, supply a [custom topology dependency](https://github.com/colinsurprenant/redstorm#custom-jar-dependencies-in-your-topology-xml-warning-p). Make sure your installed JRuby version matches the RedStorm JRuby dependency version
 
-- have Storm extracted locally and its `bin/` directory in your path
 - have a Storm cluster handy
 - edit your `~/.storm/storm.yaml` to point to your cluster nimbus host
 - clone project
@@ -24,65 +23,56 @@ $ bundle install
 $ bundle exec rake setup
 ```
 
-`rake setup` will:
+This will:
 - install RedStorm
 - compile the benchmarking Java classes
 - create the topology jar
 
 ## Base topology benchmark
 
-The goal with the base topology benchmark is to get an idea of the JRuby + DSL overhead of calling a bolt without any computation, just receiving and emitting tuples.
+The goal with the base topology benchmark is to get an idea of the JRuby overhead of calling a bolt without any computation, just receiving and emitting tuples.
 
 Both the Java and Ruby base topologies use the same Java emitting spout which spits tuples as fast as possible. Both topologies are built using two bolts without any computation.
-
-### Run the Java topology
 
 ```sh
 $ bundle exec redstorm cluster lib/redstorm-benchmark/base_java_topology.rb
 ```
-### Run the Ruby topology
 
 ```sh
 $ bundle exec redstorm cluster lib/redstorm-benchmark/base_ruby_topology.rb
 ```
-
-## Results
-
-The stats are taken from the last 10 minutes execution window at around the 15th minute of execution.
 
 ### Environment
 
 - Single node cluster
 - Amazon EC2 m1.large instance (64bits, 4 ECU, 7.6GB)
 - Linux 12.10
-- RedStorm 0.6.6
 - Storm 0.9.0-wip16
 - JRuby 1.7.4
 - OpenJDK 1.7.0_21
 
 ### Topology
 
-- 4 workers
-- gen_spout: 2 executors, 2 tasks
-- identity_bolt: 8 executors, 8 tasks
-- ack_bolt: 2 executors, 2 tasks
+ | executors | tasks
+--- | ---: | ---:
+gen_spout | 1 | 1
+identity_bolt | 8 | 8
+ack_bolt | 1 | 1
 
-### Java
+config | value
+--- | ---:
+num_workers | 1
+num_ackers | 0
+max_spout_pending | 10000
 
-- **54057** tuples/sec emitted
-- ack_bolt
-  - capacity: 0.093
-  - execute latency: 0.007ms
-- identity_bolt
-  - capacity: 0.092
-  - execute latency: 0.018ms
+### Results
 
-### JRuby
+The stats are taken from the last 10 minutes execution window at around the 15th minute of execution.
 
-- **29547** tuples/sec emitted
-- ack_bolt
-  - capacity: 0.624
-  - execute latency: 0.082ms
-- identity_bolt
-  - capacity: 0.858
-  - execute latency: 0.445ms
+Note that RedStorm v0.7.0 is still unreleased WIP.
+
+ | Java | JRuby & v0.7.0 | JRuby & v0.6.6
+--- | ---: | ---: | ---:
+tuples/sec transferred | 156163 | 131843 | 116065
+ack_bolt capacity | 0.726 |  0.538 | 0.546
+identity_bolt capacity | 0.279 | 0.216 | 0.259
