@@ -6,13 +6,13 @@ java_import 'storm.benchmark.IdentityBolt'
 
 
 class BaseJavaTopology < RedStorm::DSL::Topology
-  spout GenSpout, [10], :parallelism => 2
+  spout GenSpout, [10], :parallelism => 1
 
   bolt IdentityBolt, :parallelism => 8 do
     source GenSpout, :shuffle
   end
 
-  bolt AckBolt, :parallelism => 2 do
+  bolt AckBolt, :parallelism => 1 do
     source IdentityBolt, :shuffle
   end
 
@@ -20,7 +20,8 @@ class BaseJavaTopology < RedStorm::DSL::Topology
     debug false
 
     num_ackers 0
-    num_workers 4
+    num_workers 1
     max_spout_pending 10000
+    set "topology.worker.childopts", "-XX:ReservedCodeCacheSize=128m"
   end
 end
